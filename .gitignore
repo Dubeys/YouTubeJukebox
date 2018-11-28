@@ -1,3 +1,4 @@
-dist/js/
+dist/
+src/ts/gapi.key.ts
 node_modules/
 package-lock.json
