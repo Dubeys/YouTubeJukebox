@@ -1,8 +1,3 @@
-interface IKeys {
-    [key: string]: string | string[];
-}
-
-
 class App {
 
     private _channelVideos: any[];
@@ -201,23 +196,26 @@ class GoogleAPI {
     private signinCB:any;
     private signoutCB:any;
 
-    constructor( google:any, keys:IKeys ) {
+    constructor( google:any, key:string ) {
 
         this.api = google;
 
         this.authorizeButton = document.getElementById('authorize-button');
         this.signoutButton = document.getElementById('signout-button');
 
-        this.api.load('client:auth2', () => this.initClient(keys));
+        this.api.load('client:auth2', () => this.initClient(key));
 
     }
 
-    initClient(keys:IKeys) {
+    initClient(key:string) {
+
+        const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
+        const SCOPES = 'https://www.googleapis.com/auth/youtube.force-ssl';
 
         this.api.client.init({
-            discoveryDocs: keys.DISCOVERY_DOCS,
-            clientId: keys.CLIENT_ID,
-            scope: keys.SCOPES
+            discoveryDocs: DISCOVERY_DOCS,
+            clientId: key,
+            scope: SCOPES
         }).then( () => {
             // Listen for sign-in state changes.
             this.api.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus.bind(this));
@@ -260,10 +258,10 @@ class GoogleAPI {
 
 }
 
-declare let apiKeys:IKeys;
+declare let gapiKey:string;
 
 function onGoogleApiLoad(api:any) {
-    const connector = new GoogleAPI(api,apiKeys);
+    const connector = new GoogleAPI(api,gapiKey);
     const app = new App();
     connector.onSignin = (api:any) => {
         app.init(api)
