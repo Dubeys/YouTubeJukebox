@@ -1,0 +1,17 @@
+html,body {
+    margin: 0;
+}
+
+body {
+    width: 100%;
+}
+
+a {
+    display: block;
+    margin: 0 auto;
+}
+
+h2,p {
+    display: block;
+    width: 100%;
+}
