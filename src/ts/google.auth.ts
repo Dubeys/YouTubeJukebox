@@ -1,8 +1,5 @@
-export class GoogleAPI {
-
-    private authorizeButton: any;
-    private signoutButton: any;
-
+export class GoogleAuth {
+    
     private api: any;
     private signinCB: any;
     private signoutCB: any;
@@ -10,9 +7,6 @@ export class GoogleAPI {
     constructor(google: any, key: string) {
 
         this.api = google;
-
-        this.authorizeButton = document.getElementById('authorize-button');
-        this.signoutButton = document.getElementById('signout-button');
 
         this.api.load('client:auth2', () => this.initClient(key));
 
@@ -33,29 +27,23 @@ export class GoogleAPI {
 
             // Handle the initial sign-in state.
             this.updateSigninStatus(this.api.auth2.getAuthInstance().isSignedIn.get());
-            this.authorizeButton.onclick = this.handleAuthClick.bind(this);
-            this.signoutButton.onclick = this.handleSignoutClick.bind(this);
         });
     }
 
     updateSigninStatus(isSignedIn: boolean) {
         if (isSignedIn) {
-            this.authorizeButton.style.display = 'none';
-            this.signoutButton.style.display = 'block';
             this.signinCB(this.api);
 
         } else {
-            this.authorizeButton.style.display = 'block';
-            this.signoutButton.style.display = 'none';
             this.signoutCB();
         }
     }
 
-    handleAuthClick(event: any) {
+    handleAuth(event: any) {
         this.api.auth2.getAuthInstance().signIn();
     }
 
-    handleSignoutClick(event: any) {
+    handleSignout(event: any) {
         this.api.auth2.getAuthInstance().signOut();
     }
 

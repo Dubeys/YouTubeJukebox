@@ -6,12 +6,27 @@ body {
     width: 100%;
 }
 
-a {
-    display: block;
+.yt-latest {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
     margin: 0 auto;
+
+    max-width: 1024px;
+    width: 100%;
+
 }
 
-h2,p {
+.yt-thumbnail {
     display: block;
-    width: 100%;
+
+    img {
+        display: block;
+    }
+
+    h2,p {
+        display: block;
+    }
 }
