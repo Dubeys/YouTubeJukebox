@@ -1,5 +1,4 @@
-import { GoogleAuth } from './ts/google.auth';
-import { GoogleRequest } from './ts/google.request';
+import { GoogleAuth } from './ts/services/google.auth';
 import { App } from './ts/app';
 import { gapiKey } from './ts/gapi.key';
 
@@ -14,20 +13,15 @@ declare global {
 window.onGoogleApiLoad = function (api:any) {
 
     const auth = new GoogleAuth(api, gapiKey);
-    const req = new GoogleRequest();
     const app = new App();
 
     app.onUserLoginEvent = auth.handleAuth.bind(auth);
     app.onUserLogoutEvent = auth.handleSignout.bind(auth);
 
     auth.onSignin = (api:any) => {
-        req.request(api).then( () => {
-            app.showThumbnails(req.latestVideos);
-        })
-        app.handleLogin();
+        app.handleLogin(api);
     };
     auth.onSignout = () => {
-        req.dispose();
         app.handleLogout();
     };
 }

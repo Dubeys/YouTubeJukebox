@@ -1,21 +1,27 @@
 import { HTMLAppend } from './utils/html-append';
+import { GoogleData } from './services/google.data';
 
 export class App {
 
     private _loginButton: any;
     private _logoutButton: any;
 
+    private _data: GoogleData = new GoogleData();
+
     constructor() {
 
         this._loginButton = document.getElementById('authorize-button');
         this._logoutButton = document.getElementById('signout-button');
-
     }
 
-    handleLogin() {
+    handleLogin(api:any) {
 
         this._loginButton.style.display = 'none';
         this._logoutButton.style.display = 'block';
+
+        this._data.init(api)
+        .then( () => this._data.getAllVideos() )
+        .then( () => this.showThumbnails(this._data.getVideosByDate(1)) )
 
     }
 
@@ -23,6 +29,8 @@ export class App {
 
         this._loginButton.style.display = 'block';
         this._logoutButton.style.display = 'none';
+
+        this._data.dispose();
 
         const root: any = document.getElementById('content');
         while (root.firstChild) {
