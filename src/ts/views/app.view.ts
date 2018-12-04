@@ -44,6 +44,7 @@ export class YTJBApp extends PolymerElement {
                 :host {
                     display: block;
                     width: 100%;
+                    background: white;
                 }
 
             </style>
