@@ -39,11 +39,11 @@ export class GoogleAuth {
         }
     }
 
-    handleAuth(event: any) {
+    handleAuth() {
         this.api.auth2.getAuthInstance().signIn();
     }
 
-    handleSignout(event: any) {
+    handleSignout() {
         this.api.auth2.getAuthInstance().signOut();
     }
 

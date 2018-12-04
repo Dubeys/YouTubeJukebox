@@ -1,6 +1,4 @@
-import { GoogleAuth } from './ts/services/google.auth';
-import { App } from './ts/app';
-import { gapiKey } from './ts/gapi.key';
+import {YTJBApp} from './ts/views/app.view';
 
 import './styles/index.scss';
 
@@ -12,16 +10,7 @@ declare global {
 
 window.onGoogleApiLoad = function (api:any) {
 
-    const auth = new GoogleAuth(api, gapiKey);
-    const app = new App();
+    const appView = new YTJBApp(api);
+    document.body.appendChild(appView);
 
-    app.onUserLoginEvent = auth.handleAuth.bind(auth);
-    app.onUserLogoutEvent = auth.handleSignout.bind(auth);
-
-    auth.onSignin = (api:any) => {
-        app.handleLogin(api);
-    };
-    auth.onSignout = () => {
-        app.handleLogout();
-    };
 }
